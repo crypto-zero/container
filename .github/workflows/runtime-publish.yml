@@ -26,8 +26,7 @@ jobs:
           GO_BUILDER_IMAGE_TAG="${GO_BUILDER_REGISTRY}:v${LATEST_GO_VERSION}"
           GO_RUNTIME_IMAGE_TAG="${GO_RUNTIME_REGISTRY}:v${LATEST_GO_VERSION}"
           if docker manifest inspect $GO_BUILDER_IMAGE_TAG >/dev/null 2>&1 || 
-             docker manifest inspect $GO_RUNTIME_IMAGE_TAG >/dev/null 2>&1
-          ; then
+             docker manifest inspect $GO_RUNTIME_IMAGE_TAG >/dev/null 2>&1 ; then
             echo "should_build=false" >> $GITHUB_OUTPUT
           else
             echo "should_build=true" >> $GITHUB_OUTPUT

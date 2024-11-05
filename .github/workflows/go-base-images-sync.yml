@@ -1,4 +1,4 @@
-name: golang latest version builder and runtime
+name: Go Base Images Sync
 
 on:
   workflow_dispatch:

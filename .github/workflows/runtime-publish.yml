@@ -44,11 +44,11 @@ jobs:
           - image: 'go-builder'
             dockerfile: '../../go-builder/Dockerfile'
             context: '../../go-builder'
-            tags:  ${GO_BUILDER_REGISTRY}
+            tags:  ${{ env.GO_BUILDER_REGISTRY }}
           - image: 'go-runtime'
             dockerfile: '../../go-runtime/Dockerfile'
             context: '../../go-runtime'
-            tags:  ${GO_RUNTIME_REGISTRY}
+            tags:  ${{ env.GO_RUNTIME_REGISTRY }}
     steps:
       - uses: actions/checkout@v4
 

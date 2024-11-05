@@ -42,12 +42,12 @@ jobs:
         image: [ 'go-builder', 'go-runtime' ]
         include:
           - image: 'go-builder'
-            dockerfile: '../../go-builder/Dockerfile'
-            context: '../../go-builder'
+            dockerfile: 'go-builder/Dockerfile'
+            context: 'go-builder'
             registry_suffix: go-builder
           - image: 'go-runtime'
-            dockerfile: '../../go-runtime/Dockerfile'
-            context: '../../go-runtime'
+            dockerfile: 'go-runtime/Dockerfile'
+            context: 'go-runtime'
             registry_suffix: go-runtime
     steps:
       - uses: actions/checkout@v4

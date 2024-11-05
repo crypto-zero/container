@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+echo "${CI_BUILD_INFO}"
+
+if [ -n "${TZ}" ]; then
+    echo "set timezone to ${TZ}"
+    echo "${TZ}" > /etc/timezone
+    cp "/usr/share/zoneinfo/${TZ}" /etc/localtime
+fi
+
+exec "${PROJECT_NAME}" "$@"

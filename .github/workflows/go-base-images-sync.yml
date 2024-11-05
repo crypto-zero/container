@@ -1,4 +1,4 @@
-name: Go Base Images Sync
+name: Go Base Images Builder
 
 on:
   workflow_dispatch:
@@ -44,11 +44,11 @@ jobs:
           - image: 'go-builder'
             dockerfile: '../../go-builder/Dockerfile'
             context: '../../go-builder'
-            tags:  ${{ env.GO_BUILDER_REGISTRY }}
+            registry_suffix: go-builder
           - image: 'go-runtime'
             dockerfile: '../../go-runtime/Dockerfile'
             context: '../../go-runtime'
-            tags:  ${{ env.GO_RUNTIME_REGISTRY }}
+            registry_suffix: go-runtime
     steps:
       - uses: actions/checkout@v4
 
@@ -71,4 +71,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             VERSION=${{ needs.check.outputs.version }}
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ matrix.tags }}:v${{ needs.check.outputs.version }}
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ github.repository }}/${{ matrix.registry_suffix }}:v${{ needs.check.outputs.version }}

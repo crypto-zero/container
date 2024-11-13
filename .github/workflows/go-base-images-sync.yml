@@ -23,8 +23,8 @@ jobs:
           LATEST_GO_VERSION=$(curl -s 'https://go.dev/VERSION?m=text' | head -n 1 | cut -c 3-)
           echo "Latest go version is $LATEST_GO_VERSION"
           
-          GO_BUILDER_IMAGE_TAG="${GO_BUILDER_REGISTRY}:v${LATEST_GO_VERSION}"
-          GO_RUNTIME_IMAGE_TAG="${GO_RUNTIME_REGISTRY}:v${LATEST_GO_VERSION}"
+          GO_BUILDER_IMAGE_TAG="${IMAGE_REGISTRY}/${GO_BUILDER_REGISTRY}:v${LATEST_GO_VERSION}"
+          GO_RUNTIME_IMAGE_TAG="${IMAGE_REGISTRY}/${GO_RUNTIME_REGISTRY}:v${LATEST_GO_VERSION}"
           if docker manifest inspect ${GO_BUILDER_IMAGE_TAG} >/dev/null 2>&1 || 
              docker manifest inspect ${GO_RUNTIME_IMAGE_TAG} >/dev/null 2>&1 ; then
             echo "should_build=false" >> $GITHUB_OUTPUT

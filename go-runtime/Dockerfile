@@ -1,4 +1,4 @@
-ARG VERSION=1.23.2
+ARG VERSION
 FROM golang:${VERSION}-alpine as builder
 RUN  apk add --no-cache git
 RUN go install github.com/google/gops@latest

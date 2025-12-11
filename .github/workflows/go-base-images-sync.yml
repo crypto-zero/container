@@ -1,9 +1,17 @@
-name: Go Base Images Builder
+name: Sync Go Images
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'test-**'
   schedule:
     - cron: '0 0 * * *'
+
+permissions:
+  contents: read
+  packages: write
 
 env:
   IMAGE_REGISTRY: ghcr.io
@@ -27,7 +35,7 @@ jobs:
           GO_RUNTIME_IMAGE_TAG="${IMAGE_REGISTRY}/${GO_RUNTIME_REGISTRY}:v${LATEST_GO_VERSION}"
           
           echo "GO_BUILDER_IMAGE_TAG:${GO_BUILDER_IMAGE_TAG}"
-          echo "GO_RUNTIME_IMAGE_TAG:${GO_BUILDER_IMAGE_TAG}"
+          echo "GO_RUNTIME_IMAGE_TAG:${GO_RUNTIME_IMAGE_TAG}"
 
           if docker manifest inspect ${GO_BUILDER_IMAGE_TAG} >/dev/null 2>&1 && 
              docker manifest inspect ${GO_RUNTIME_IMAGE_TAG} >/dev/null 2>&1 ; then
@@ -68,6 +76,7 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v5
+        timeout-minutes: 120
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
@@ -75,4 +84,14 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             VERSION=${{ needs.check.outputs.version }}
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ github.repository }}/${{ matrix.registry_suffix }}:v${{ needs.check.outputs.version }}
+          tags: |
+            ${{ env.IMAGE_REGISTRY }}/${{ github.repository }}/${{ matrix.registry_suffix }}:v${{ needs.check.outputs.version }}
+            ${{ env.IMAGE_REGISTRY }}/${{ github.repository }}/${{ matrix.registry_suffix }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          labels: |
+            org.opencontainers.image.title=${{ matrix.image }}
+            org.opencontainers.image.description=Go ${{ needs.check.outputs.version }} ${{ matrix.image }} image
+            org.opencontainers.image.version=${{ needs.check.outputs.version }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}

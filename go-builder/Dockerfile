@@ -1,5 +1,5 @@
 ARG VERSION
-FROM golang:${VERSION}-alpine
+FROM golang:${VERSION}-alpine3.23
 
 RUN apk update && \
     apk add --no-cache \

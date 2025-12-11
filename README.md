@@ -101,10 +101,10 @@ docker buildx build --platform linux/amd64,linux/arm64 \
    - **Local builds must specify `--build-arg VERSION=x.y.z`** - builds will fail without this parameter
    - This design forces version awareness and prevents accidentally using outdated versions
 
-2. Images are based on Alpine Linux (small size, uses musl libc)
+2. Images are based on Alpine Linux 3.23 (small size, uses musl libc, pinned for stability)
 
 3. go-runtime requires `PROJECT_NAME` environment variable pointing to the executable
 
 4. Both images support multi-architecture (amd64/arm64)
 
-5. **go-runtime design**: Uses pure `alpine:latest` as base (not `golang:alpine`) for minimal runtime size (~50MB vs ~400MB)
+5. **go-runtime design**: Uses pure `alpine:3.23` as base (not `golang:alpine`) for minimal runtime size (~50MB vs ~400MB)

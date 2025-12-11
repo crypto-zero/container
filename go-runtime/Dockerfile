@@ -4,7 +4,7 @@ RUN apk add --no-cache git
 RUN go install github.com/google/gops@latest
 
 ARG VERSION
-FROM alpine:3.23
+FROM alpine:3.22
 
 RUN mkdir -p /app/bin/ /app/configs /app/logs
 WORKDIR /app

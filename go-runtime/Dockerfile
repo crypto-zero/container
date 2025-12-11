@@ -1,10 +1,10 @@
 ARG VERSION
-FROM golang:${VERSION}-alpine3.23 AS builder
+FROM golang:${VERSION}-alpine3.20 AS builder
 RUN apk add --no-cache git
 RUN go install github.com/google/gops@latest
 
 ARG VERSION
-FROM alpine:3.23
+FROM alpine:3.20
 
 RUN mkdir -p /app/bin/ /app/configs /app/logs
 WORKDIR /app

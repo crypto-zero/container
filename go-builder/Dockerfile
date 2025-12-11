@@ -1,4 +1,4 @@
-ARG VERSION=1.25.5
+ARG VERSION
 FROM golang:${VERSION}-alpine
 
 RUN apk update && \

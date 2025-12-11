@@ -96,10 +96,10 @@ docker buildx build --platform linux/amd64,linux/arm64 \
 ## Notes
 
 1. **Version Strategy**: 
-   - Dockerfiles have a hardcoded default version as a reference point
+   - Dockerfiles do **not** have a default version - builds require explicit version specification
    - GitHub Actions automatically detects and builds with the latest Go version
-   - **Always specify `--build-arg VERSION=x.y.z` for local builds** to use the desired version
-   - If the hardcoded version becomes unavailable, builds will fail intentionally to prompt version updates
+   - **Local builds must specify `--build-arg VERSION=x.y.z`** - builds will fail without this parameter
+   - This design forces version awareness and prevents accidentally using outdated versions
 
 2. Images are based on Alpine Linux (small size, uses musl libc)
 

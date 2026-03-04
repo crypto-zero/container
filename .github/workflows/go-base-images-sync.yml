@@ -47,7 +47,7 @@ jobs:
 
   build:
     needs: check
-    if: needs.check.outputs.should_build == 'true'
+    if: github.event_name == 'workflow_dispatch' || needs.check.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:

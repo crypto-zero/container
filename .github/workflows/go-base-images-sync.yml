@@ -30,6 +30,7 @@ jobs:
         run: |
           LATEST_GO_VERSION=$(curl -s 'https://go.dev/VERSION?m=text' | head -n 1 | cut -c 3-)
           echo "Latest go version is $LATEST_GO_VERSION"
+          echo "version=$LATEST_GO_VERSION" >> $GITHUB_OUTPUT
           
           GO_BUILDER_IMAGE_TAG="${IMAGE_REGISTRY}/${GO_BUILDER_REGISTRY}:v${LATEST_GO_VERSION}"
           GO_RUNTIME_IMAGE_TAG="${IMAGE_REGISTRY}/${GO_RUNTIME_REGISTRY}:v${LATEST_GO_VERSION}"
@@ -42,7 +43,6 @@ jobs:
             echo "should_build=false" >> $GITHUB_OUTPUT
           else
             echo "should_build=true" >> $GITHUB_OUTPUT
-            echo "version=$LATEST_GO_VERSION" >> $GITHUB_OUTPUT
           fi
 
   build:

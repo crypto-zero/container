@@ -14,4 +14,5 @@ RUN apk update && \
         binutils-gold \
         build-base \
         musl-dev && \
+    sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin && \
     rm -rf /var/cache/apk/*
